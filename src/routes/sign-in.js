@@ -4,19 +4,19 @@ const express = require('express')
 const bcrypt = require('bcryptjs')
 const base64 = require('base-64')
 
-const encoding = require('../middleware/encoding')
+const decoding = require('../middleware/decoding')
 
 
 const { Users } = require('../models/index')
 
 const router = express.Router()
 
-router.post('/sign-in', encoding, signIn)
+router.post('/sign-in', decoding, signIn)
 
 async function signIn(req, res) {
   try {
     const user = await Users.findOne({ where: { username: req.body.username } })
-    const valid = await bcrypt.compare(req.body.password, user.password)
+    const valid = await bcrypt.compare(req.body.password, user.dataValues.password)
     if (valid) {
       res.status(200).json(user)
     }
