@@ -1,4 +1,4 @@
-# basic-api-server
+# basic-auth
 Code Fellows 401 JavaScript Lab 6
 
 This is a practice server & database deployment using [Heroku](https://www.heroku.com/).
