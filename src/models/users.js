@@ -2,8 +2,8 @@
 
 const bcrypt = require('bcryptjs')
 
-const Users = (sequelize, DataTypes) => {
-  const user = sequelize.define('User', {
+const userModel = (sequelize, DataTypes) => {
+  const model = sequelize.define('Users', {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -15,15 +15,13 @@ const Users = (sequelize, DataTypes) => {
     },
   })
 
-  user.beforeCreate( async (user) => {
+  model.beforeCreate( async (user) => {
     let hashedPassword = await bcrypt.hash(user.password, 12)
     user.password = hashedPassword;
     return user.password
   })
 
-  return user
+  return model
 }
 
-
-
-module.exports = Users
+module.exports = userModel

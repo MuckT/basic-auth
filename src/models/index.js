@@ -6,6 +6,7 @@ require('dotenv').config()
 const DATABASE_URL = process.env.NODE_ENV === 'test' 
   ? 'sqlite:memory' : process.env.DATABASE_URL
 const { Sequelize, DataTypes } = require('sequelize')
+const userSchema = require('./users')
 let sequelizeOptions = process.env.NODE_ENV === 'production'
     ? {
         dialectOptions: {
@@ -17,9 +18,8 @@ let sequelizeOptions = process.env.NODE_ENV === 'production'
     }
     : {};
 let sequelize = new Sequelize(DATABASE_URL, sequelizeOptions);
-const users = require('./users')
 
 module.exports = {
   db: sequelize,
-  Users: users(sequelize, DataTypes),
+  users: userSchema(sequelize, DataTypes),
 }
